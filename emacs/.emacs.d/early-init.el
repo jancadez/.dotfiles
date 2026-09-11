@@ -10,7 +10,7 @@
       inhibit-startup-message t
       inhibit-startup-echo-area-message t)
 
-(add-to-list 'default-frame-alist '(font . "Iosevka Nerd Font-18"))
+(add-to-list 'default-frame-alist '(font . "Iosevka Term-18"))
 
 (add-to-list 'default-frame-alist
              '(background-color . "#181818"))

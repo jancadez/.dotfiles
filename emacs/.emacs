@@ -12,7 +12,7 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (require 'use-package)
 
-(add-to-list 'default-frame-alist '(font . "Iosevka Nerd Font-18"))
+(add-to-list 'default-frame-alist '(font . "Iosevka Term-18"))
 
 (tool-bar-mode 0)
 (menu-bar-mode 0)
@@ -29,11 +29,14 @@
 
 (savehist-mode 1)
 (repeat-mode 1)
+(visual-line-mode t)
 
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 (setq magit-diff-refine-hunk 'all)
 
 ;; (add-hook 'prog-mode-hook #'hs-minor-mode)
+
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)

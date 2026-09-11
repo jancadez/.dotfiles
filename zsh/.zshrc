@@ -51,8 +51,8 @@ alias ll='ls -lh'
 alias la='ls -A'
 alias lla='ls -lAh'
 
-alias fceux='gamescope -f -- fceux'
-alias sober='flatpak run org.vinegarhq.Sober'
+alias fd='fdfind'
+alias dbeaver='dbeaver -nosplash'
 
 mkcd() {
     mkdir -p "$1" && cd "$1"
@@ -69,8 +69,6 @@ saveshot() {
         > "$HOME/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png"
 }
 
-# NPM global bin (added by Qwen Code installer)
-export PATH="$HOME/.npm-global/bin:$PATH"
-
-# opencode
-export PATH=/home/jan/.opencode/bin:$PATH
+# >>> Codex installer >>>
+export PATH="/home/jan/.local/bin:$PATH"
+# <<< Codex installer <<<
