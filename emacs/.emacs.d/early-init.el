@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 (setq native-comp-async-report-warnings-errors 'silent)
 (setq frame-inhibit-implied-resize t)
 

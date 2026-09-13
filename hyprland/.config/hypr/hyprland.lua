@@ -40,6 +40,14 @@ hl.monitor({
 })
 
 hl.monitor({
+      output = "DP-3",
+      mode = "2560x1440@180",
+      position = "0x0",
+      scale = 1.25,
+      vrr = 1,
+})
+
+hl.monitor({
       output = "DP-2",
       mode = "1920x1080@165",
       position = "auto-center-right",
@@ -110,7 +118,7 @@ hl.config({
             enabled   = false,
             size      = 3,
             passes    = 1,
-            vibrancy  = 0.1696,
+            vibrancy = 0.1696,
          },
       },
 

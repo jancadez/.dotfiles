@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 (setq custom-file "~/.custom.el")
 (when (file-exists-p custom-file)
   (load custom-file))
@@ -9,7 +10,7 @@
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
+(require 'use-package)
 
 (add-to-list 'default-frame-alist '(font . "Iosevka Nerd Font-18"))
 
@@ -22,6 +23,9 @@
 (setq vc-follow-symlinks t)
 (setq dired-dwim-target t)
 (setq case-replace nil)
+
+(setq split-height-threshold 0)
+(setq split-width-threshold nil)
 
 (savehist-mode 1)
 (repeat-mode 1)
@@ -78,8 +82,9 @@
 (global-set-key (kbd "<escape>") 'ignore)
 
 (global-set-key (kbd "M-.") #'xref-find-definitions)
-(global-set-key (kbd "M-'") #'xref-find-references)
-(global-set-key (kbd "M-,") #'xref-go-back)
+(global-set-key (kbd "M-,") #'xref-find-references)
+(global-set-key (kbd "M-[") #'xref-go-back)
+(global-set-key (kbd "M-]") #'xref-go-forward)
 (global-set-key (kbd "C-c k") #'eldoc-box-help-at-point)
 (global-set-key (kbd "C-c h") #'eldoc-doc-buffer)
 (global-set-key (kbd "C-c c") 'compile)
@@ -229,6 +234,9 @@
 (use-package lua-mode
   :ensure t)
 
+(use-package qml-mode
+  :ensure t)
+
 (add-to-list 'major-mode-remap-alist
              '(typescript-mode . typescript-ts-mode))
 (add-to-list 'major-mode-remap-alist
@@ -276,7 +284,8 @@
 		 (typescript-mode . eglot-ensure)
 		 (css-mode . eglot-ensure)
 		 (vue-ts-mode . eglot-ensure)
-		 (lua-mode . eglot-ensure))
+		 (lua-mode . eglot-ensure)
+         (qml-mode . eglot-ensure))
 
   :config
   (setq eglot-stay-out-of '(flymake))
@@ -292,6 +301,8 @@
   ;;   		   '((vue-ts-mode) . ("vue-language-server" "--stdio")))
   (add-to-list 'eglot-server-programs
 			   '(typescript-mode . ("typescript-language-server" "--stdio")))
+  (add-to-list 'eglot-server-programs
+			   '(qml-mode . ("qmlls6" "-E")))
   (setq-default eglot-workspace-configuration
 				'((pylsp
 				   (plugins
