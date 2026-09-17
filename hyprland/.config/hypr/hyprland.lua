@@ -6,6 +6,8 @@ hl.env("XCURSOR_SIZE", "24")
 hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
 hl.env("MOZ_ENABLE_WAYLAND", "1")
 
+hl.env("QT_QPA_PLATFORMTHEME", "qt6");
+
 hl.on("hyprland.start", function ()
     hl.exec_cmd(
         "dbus-update-activation-environment --systemd " ..
@@ -29,6 +31,7 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("wl-paste --watch cliphist store")
     hl.exec_cmd("hyprctl setcursor Adwaita 24")
     hl.exec_cmd("openrgb --startminimized")
+    hl.exec_cmd("/usr/lib/polkit-kde-authentication-agent-1")
 end)
 
 hl.monitor({
@@ -229,6 +232,7 @@ hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd(browser .. " --private-window
 hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + Z", hl.dsp.exec_cmd("woomer --monitor \"DP-1\""))
 hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("hyprpicker -a"))
+hl.bind(mainMod .. " + CONTROL + ALT + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("cliphist list | wofi -S dmenu | cliphist decode | wl-copy"))
 
 -- Fullscreen
@@ -343,6 +347,3 @@ hl.window_rule({
       move  = "20 monitor_h-120",
       float = true,
 })
-
--- HyprMod managed settings
-require("hyprland-gui")

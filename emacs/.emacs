@@ -271,7 +271,8 @@
   :ensure t
   :bind
   (("C-c C-r" . eglot-rename)
-   ("C-c C-f" . eglot-format))
+   ("C-c C-f" . eglot-format)
+   ("C-c C-a" . eglot-code-actions))
   :hook ((c-mode . eglot-ensure)
 		 (c-ts-mode . eglot-ensure)
 		 (c++-mode . eglot-ensure)
@@ -294,7 +295,9 @@
   (add-to-list 'eglot-server-programs
 			   '((csharp-mode) . ("omnisharp" "-lsp")))
   (add-to-list 'eglot-server-programs
-			   '((rust-mode rust-ts-mode) . ("rust-analyzer")))
+               `((rust-mode rust-ts-mode) . ("rust-analyzer" :initializationOptions
+                              (:procMacro (:enable t)
+                                          :cargo (:buildScripts (:enable t) :features "all")))))
   (add-to-list 'eglot-server-programs
 			   '((python-mode) . ("pylsp")))
   ;; (add-to-list 'eglot-server-programs
