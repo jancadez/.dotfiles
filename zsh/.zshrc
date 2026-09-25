@@ -55,7 +55,7 @@ alias fceux='gamescope -f -- fceux'
 alias sober='flatpak run org.vinegarhq.Sober'
 
 mkcd() {
-mkdir -p "$1" && cd "$1"
+    mkdir -p "$1" && cd "$1"
 }
 
 autoload -Uz colors

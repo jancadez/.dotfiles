@@ -3,6 +3,8 @@ hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("XCURSOR_THEME", "Adwaita")
 hl.env("XCURSOR_SIZE", "24")
 
+hl.env("GDK_SCALE", "1.25")
+
 hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
 hl.env("MOZ_ENABLE_WAYLAND", "1")
 
@@ -31,7 +33,6 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("wl-paste --watch cliphist store")
     hl.exec_cmd("hyprctl setcursor Adwaita 24")
     hl.exec_cmd("openrgb --startminimized")
-    hl.exec_cmd("/usr/lib/polkit-kde-authentication-agent-1")
 end)
 
 hl.monitor({
@@ -280,8 +281,8 @@ hl.bind(mainMod .. " + SHIFT + J", hy3.move_window("d"))
 
 hl.bind(mainMod .. " + Period", hl.dsp.focus({ monitor = "+1" }))
 hl.bind(mainMod .. " + Comma", hl.dsp.focus({ monitor = "-1" }))
-hl.bind(mainMod .. " + SHIFT + Period", hl.dsp.window.move({ monitor = "+1", follow = false }))
-hl.bind(mainMod .. " + SHIFT + Comma", hl.dsp.window.move({ monitor = "-1", follow = false }))
+hl.bind(mainMod .. " + SHIFT + Period", hl.dsp.window.move({ monitor = "+1", follow = true }))
+hl.bind(mainMod .. " + SHIFT + Comma", hl.dsp.window.move({ monitor = "-1", follow = true }))
 
 for i = 1, 5 do
    hl.bind(mainMod .. " + " .. i, hl.dsp.focus({ workspace = i }))

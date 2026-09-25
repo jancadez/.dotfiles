@@ -24,11 +24,14 @@
 (setq dired-dwim-target t)
 (setq case-replace nil)
 
-(setq split-height-threshold 0)
+(setq split-height-threshold 20)
 (setq split-width-threshold nil)
 
 (savehist-mode 1)
 (repeat-mode 1)
+
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+(setq magit-diff-refine-hunk 'all)
 
 ;; (add-hook 'prog-mode-hook #'hs-minor-mode)
 
@@ -272,18 +275,18 @@
   :bind
   (("C-c C-r" . eglot-rename)
    ("C-c C-f" . eglot-format)
-   ("C-c C-a" . eglot-code-actions))
+   ("C-c a" . eglot-code-actions))
   :hook ((c-mode . eglot-ensure)
 		 (c-ts-mode . eglot-ensure)
 		 (c++-mode . eglot-ensure)
 		 (c++-ts-mode . eglot-ensure)
 		 (csharp-mode . eglot-ensure)
-		 (rust-mode . eglot-ensure)
+		 (rust-ts-mode . eglot-ensure)
 		 (glsl-mode . eglot-ensure)
 		 (nasm-mode . eglot-ensure)
 		 (python-mode . eglot-ensure)
-		 (typescript-mode . eglot-ensure)
-		 (css-mode . eglot-ensure)
+		 (typescript-ts-mode . eglot-ensure)
+		 (css-ts-mode . eglot-ensure)
 		 (vue-ts-mode . eglot-ensure)
 		 (lua-mode . eglot-ensure)
          (qml-mode . eglot-ensure))
