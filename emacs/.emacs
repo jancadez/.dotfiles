@@ -240,17 +240,9 @@
 (use-package qml-mode
   :ensure t)
 
-(add-to-list 'major-mode-remap-alist
-             '(typescript-mode . typescript-ts-mode))
-(add-to-list 'major-mode-remap-alist
-             '(css-mode . css-ts-mode))
-(add-to-list 'major-mode-remap-alist
-             '(rust-mode . rust-ts-mode))
-
 (setq treesit-language-source-alist
       '((c "https://github.com/tree-sitter/tree-sitter-c")
 		(rust "https://github.com/tree-sitter/tree-sitter-rust")
-		(c3 "https://github.com/c3lang/tree-sitter-c3")
 		(typst "https://github.com/uben0/tree-sitter-typst")
 		(cpp "https://github.com/tree-sitter/tree-sitter-cpp")
 		(typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
@@ -258,10 +250,6 @@
         (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
 		(css "https://github.com/tree-sitter/tree-sitter-css")
 		(vue "https://github.com/ikatyang/tree-sitter-vue")))
-
-(add-to-list 'load-path "~/.emacs.d/c3")
-(require 'c3-ts-mode)
-(setq c3-ts-mode-indent-offset 4)
 
 (add-to-list 'load-path "~/.emacs.d/vue-ts-mode")
 (require 'vue-ts-mode)
