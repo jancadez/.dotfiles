@@ -33,6 +33,7 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("wl-paste --watch cliphist store")
     hl.exec_cmd("hyprctl setcursor Adwaita 24")
     hl.exec_cmd("openrgb --startminimized")
+    hl.exec_cmd("kdeconnectd")
 end)
 
 hl.monitor({
@@ -347,4 +348,15 @@ hl.window_rule({
       
       move  = "20 monitor_h-120",
       float = true,
+})
+
+hl.window_rule({
+    name = "cs2-performance-tweaks",
+    match = {
+        class = "^(steam_app_730)$"
+    },
+    fullscreen = true,
+    immediate = true,
+    no_blur = true,
+    no_anim = true,
 })
