@@ -48,11 +48,11 @@ alias grep='grep --color=auto'
 alias diff='diff --color=auto'
 
 alias ll='ls -lh'
-alias la='ls -A'
-alias lla='ls -lAh'
+alias la='ls -lAh'
 
 alias fd='fdfind'
 alias dbeaver='dbeaver -nosplash'
+alias pnpm='corepack pnpm'
 
 mkcd() {
     mkdir -p "$1" && cd "$1"

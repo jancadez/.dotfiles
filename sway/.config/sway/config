@@ -25,9 +25,6 @@ set $right l
 
 set $term foot
 set $menu bemenu-run --fn "Iosevka Term 16"
-set $browser firefox
-set $browserPrivate firefox --private-window
-set $zoom woomer
 
 set $monitor1 HDMI-A-1
 
@@ -88,14 +85,17 @@ default_border pixel
     bindsym $mod+Space exec $menu
 
 	#Start your preferred browser
-	bindsym $mod+Shift+w exec $browser
-	bindsym $mod+Shift+p exec $browserPrivate
+	bindsym $mod+Shift+w exec env MOZ_ENABLE_WAYLAND=1 firefox
+	bindsym $mod+Shift+p exec firefox --private-window
 
 	# Zoom in at the cursor
-	bindsym $mod+z exec $zoom
+	bindsym $mod+z exec ~/.cargo/bin/woomer
 
 	# Start Emacs
 	bindsym $mod+c exec emacsclient -c
+
+    # Lock
+    bindsym $mod+Mod1+Control+L exec swaylock
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -286,6 +286,10 @@ bar {
         background #000000
         inactive_workspace #32323200 #32323200 #666666
     }
+    bindsym button4 nop
+    bindsym button5 nop
+    bindsym button6 nop
+    bindsym button7 nop
 }
 
 include /etc/sway/config.d/*

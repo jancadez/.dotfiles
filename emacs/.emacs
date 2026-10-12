@@ -35,6 +35,9 @@
 (setq magit-diff-refine-hunk 'all)
 
 ;; (add-hook 'prog-mode-hook #'hs-minor-mode)
+(add-hook 'markdown-mode-hook #'visual-line-mode)
+
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
@@ -240,8 +243,10 @@
 (use-package lua-mode
   :ensure t)
 
-(use-package qml-mode
-  :ensure t)
+(add-to-list 'major-mode-remap-alist
+             '(typescript-mode . typescript-ts-mode))
+(add-to-list 'major-mode-remap-alist
+             '(css-mode . css-ts-mode))
 
 (setq treesit-language-source-alist
       '((c "https://github.com/tree-sitter/tree-sitter-c")
@@ -251,7 +256,7 @@
 		(typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
         (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
         (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
-		(css "https://github.com/tree-sitter/tree-sitter-css")
+		(css "https://github.com/tree-sitter/tree-sitter-css" "v0.23.2")
 		(vue "https://github.com/ikatyang/tree-sitter-vue")))
 
 (add-to-list 'load-path "~/.emacs.d/vue-ts-mode")
@@ -310,6 +315,8 @@
 (add-hook 'eglot-managed-mode-hook
 		  (lambda ()
 			(eglot-inlay-hints-mode -1)))
+
+(add-hook 'prog-mode-hook (lambda () (flymake-mode -1)))
 
 (use-package corfu
   :ensure t
