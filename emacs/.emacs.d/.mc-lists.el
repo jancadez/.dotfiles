@@ -6,17 +6,22 @@
       '(
         avy-goto-char
         c-electric-brace
+        c-electric-colon
         c-electric-delete-forward
         c-electric-paren
         c-electric-semi&comma
         c-electric-slash
         c-electric-star
         c-indent-line-or-region
+        comment-dwim
+        corfu-expand
+        delete-indentation
         dired-next-line
         dired-previous-line
         duplicate-line
         eglot-code-actions
         electric-newline-and-maybe-indent
+        embrace-change
         end-of-buffer
         indent-for-tab-command
         kill-region
@@ -41,7 +46,9 @@
         eglot-format
         ignore
         kmacro-set-counter
+        project-compile
         project-find-file
         wdired-abort-changes
         wdired-finish-edit
+        xref-find-definitions
         ))

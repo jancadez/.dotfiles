@@ -4,6 +4,7 @@ hl.env("XCURSOR_THEME", "Adwaita")
 hl.env("XCURSOR_SIZE", "24")
 
 hl.env("GDK_SCALE", "1.25")
+hl.env("AVALONIA_GLOBAL_SCALE_FACTOR", "1.25")
 
 hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
 hl.env("MOZ_ENABLE_WAYLAND", "1")
@@ -13,7 +14,7 @@ hl.env("QT_QPA_PLATFORMTHEME", "qt6");
 hl.on("hyprland.start", function ()
     hl.exec_cmd(
         "dbus-update-activation-environment --systemd " ..
-        "WAYLAND_DISPLAY XDG_CURRENT_DESKTOP " ..
+        "WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=hyprland " ..
         "HYPRCURSOR_THEME HYPRCURSOR_SIZE " ..
         "XCURSOR_THEME XCURSOR_SIZE"
     )

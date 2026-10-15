@@ -7,6 +7,9 @@
 (setq backup-directory-alist `(("." . "~/.emacs.d/backups")))
 (setq auto-save-file-name-transforms `((".*" "~/.emacs.d/auto-save/" t)))
 (setq create-lockfiles nil)
+(dolist (dir '("~/.emacs.d/backups"
+               "~/.emacs.d/auto-save"))
+  (make-directory dir t))
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -14,6 +17,7 @@
 
 (add-to-list 'default-frame-alist '(font . "Iosevka Nerd Font-18"))
 
+(global-auto-revert-mode 1)
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
@@ -33,12 +37,17 @@
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 (setq magit-diff-refine-hunk 'all)
 
-;; (add-hook 'prog-mode-hook #'hs-minor-mode)
-
 (setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-(defvaralias 'c-basic-offset 'tab-width)
-(defvaralias 'cperl-indent-level 'tab-width)
+
+(setq completion-ignore-case t)
+(setq read-file-name-completion-ignore-case t)
+(setq read-buffer-completion-ignore-case t)
+
+(setq-default
+ tab-width 4
+ c-basic-offset 4
+ cperl-indent-level 4)
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (use-package gruber-darker-theme
@@ -70,6 +79,7 @@
   :ensure t
   :bind
   (("M-s l" . consult-line)
+   ("M-s i" . consult-imenu)
    ("C-x b" . consult-buffer)
    ("M-y" . consult-yank-pop)
    ("C-c r" . consult-ripgrep)))
@@ -97,6 +107,9 @@
 (setq dired-listing-switches "-alh")
 
 (use-package magit
+  :ensure t)
+
+(use-package projectile
   :ensure t)
 
 (use-package exec-path-from-shell
@@ -201,9 +214,6 @@
   :ensure t
   :hook ((prog-mode css-mode html-mode vue-ts-mode) . rainbow-mode))
 
-(use-package nasm-mode
-  :ensure t)
-
 (use-package rust-mode
   :ensure t)
 
@@ -237,16 +247,12 @@
 (use-package lua-mode
   :ensure t)
 
-(use-package qml-mode
-  :ensure t)
-
 (setq treesit-language-source-alist
       '((c "https://github.com/tree-sitter/tree-sitter-c")
+		(cpp "https://github.com/tree-sitter/tree-sitter-cpp")
 		(rust "https://github.com/tree-sitter/tree-sitter-rust")
 		(typst "https://github.com/uben0/tree-sitter-typst")
-		(cpp "https://github.com/tree-sitter/tree-sitter-cpp")
 		(typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
         (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
 		(css "https://github.com/tree-sitter/tree-sitter-css")
 		(vue "https://github.com/ikatyang/tree-sitter-vue")))
@@ -254,9 +260,30 @@
 (add-to-list 'load-path "~/.emacs.d/vue-ts-mode")
 (require 'vue-ts-mode)
 
+(add-to-list 'major-mode-remap-alist
+             '(rust-mode . rust-ts-mode))
+
 (setq vue-ts-mode-indent-offset 4)
 (setq typescript-ts-mode-indent-offset 4)
 (setq css-ts-mode-indent-offset 4)
+
+(use-package flycheck
+  :ensure t
+  :init
+  (global-flycheck-mode -1)
+  :bind
+  (("C-c f" . global-flycheck-eglot-mode)
+  ("C-c p" . flycheck-previous-error)
+  ("C-c n" . flycheck-next-error)))
+
+(defvar-keymap flycheck-error-repeat-map
+  :repeat t
+  "n" #'flycheck-next-error
+  "p" #'flycheck-previous-error)
+
+(use-package flycheck-eglot
+  :ensure t
+  :after (flycheck eglot))
 
 (use-package eglot
   :ensure t
@@ -265,48 +292,37 @@
    ("C-c C-f" . eglot-format)
    ("C-c a" . eglot-code-actions))
   :hook ((c-mode . eglot-ensure)
-		 (c-ts-mode . eglot-ensure)
+         (c-ts-mode . eglot-ensure)
 		 (c++-mode . eglot-ensure)
 		 (c++-ts-mode . eglot-ensure)
 		 (csharp-mode . eglot-ensure)
+		 (rust-mode . eglot-ensure)
 		 (rust-ts-mode . eglot-ensure)
 		 (glsl-mode . eglot-ensure)
-		 (nasm-mode . eglot-ensure)
 		 (python-mode . eglot-ensure)
 		 (typescript-ts-mode . eglot-ensure)
 		 (css-ts-mode . eglot-ensure)
 		 (vue-ts-mode . eglot-ensure)
-		 (lua-mode . eglot-ensure)
-         (qml-mode . eglot-ensure))
+		 (lua-mode . eglot-ensure))
 
   :config
   (setq eglot-stay-out-of '(flymake))
   (add-to-list 'eglot-server-programs
 			   '((c-mode c++-mode c-ts-mode c++-ts-mode) . ("clangd")))
   (add-to-list 'eglot-server-programs
-			   '((csharp-mode) . ("omnisharp" "-lsp")))
-  (add-to-list 'eglot-server-programs
-               `((rust-mode rust-ts-mode) . ("rust-analyzer" :initializationOptions
-                              (:procMacro (:enable t)
-                                          :cargo (:buildScripts (:enable t) :features "all")))))
+               '((csharp-mode csharp-ts-mode) . ("roslyn-language-server" "--stdio" "--autoLoadProjects")))
   (add-to-list 'eglot-server-programs
 			   '((python-mode) . ("pylsp")))
-  ;; (add-to-list 'eglot-server-programs
-  ;;   		   '((vue-ts-mode) . ("vue-language-server" "--stdio")))
+  (add-to-list 'eglot-server-programs
+               `((rust-mode rust-ts-mode) . ("rust-analyzer" :initializationOptions
+                                             (:procMacro (:enable t)))))
   (add-to-list 'eglot-server-programs
 			   '(typescript-mode . ("typescript-language-server" "--stdio")))
-  (add-to-list 'eglot-server-programs
-			   '(qml-mode . ("qmlls6" "-E")))
-  (setq-default eglot-workspace-configuration
-				'((pylsp
-				   (plugins
-					(black (enabled t)))))))
 
-(setq eglot-events-buffer-config 0)
-
+(setq eglot-events-buffer-config '(:size 0))
 (add-hook 'eglot-managed-mode-hook
 		  (lambda ()
-			(eglot-inlay-hints-mode -1)))
+			(eglot-inlay-hints-mode -1))))
 
 (use-package corfu
   :ensure t

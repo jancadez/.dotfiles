@@ -9,6 +9,7 @@ path+=(
 )
 
 eval "$(zoxide init zsh)"
+source <(fzf --zsh)
 
 setopt autocd
 setopt extendedglob
