@@ -4,6 +4,7 @@ hl.env("XCURSOR_THEME", "Adwaita")
 hl.env("XCURSOR_SIZE", "24")
 
 hl.env("GDK_SCALE", "1.25")
+hl.env("AVALONIA_GLOBAL_SCALE_FACTOR", "1.25")
 
 hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
 hl.env("MOZ_ENABLE_WAYLAND", "1")

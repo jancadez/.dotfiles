@@ -6,12 +6,15 @@
       '(
         avy-goto-char
         c-electric-brace
+        c-electric-colon
         c-electric-delete-forward
         c-electric-paren
         c-electric-semi&comma
         c-electric-slash
         c-electric-star
         c-indent-line-or-region
+        comment-dwim
+        corfu-expand
         dired-next-line
         dired-previous-line
         duplicate-line
@@ -44,4 +47,5 @@
         project-find-file
         wdired-abort-changes
         wdired-finish-edit
+        xref-find-definitions
         ))
